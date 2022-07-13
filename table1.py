@@ -29,7 +29,7 @@ def generate_table1_data(df: pd.DataFrame=None, columns: List[str]=None) -> List
     if df is None:
         df = pd.read_csv('study_data.csv')
 
-    if columns is None:
+    if columns is None or len(columns) == 0:
         columns = df.columns
 
     df = df[columns]
