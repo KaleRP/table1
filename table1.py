@@ -1,3 +1,4 @@
+import pydaisi as pyd
 import pandas as pd
 import numpy as np
 from typing import List, Dict, Optional
@@ -88,7 +89,10 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: O
     df2 = pd.DataFrame(df_data)
     return pd.concat([df, df2])
 
-def run_table1(df: pd.DataFrame=None, columns: List[str]=None):
+def run_table1(fpath: str=None, columns: List[str]=None):
+    df = None
+    if fpath is not None:
+        df = pd.read_csv(fpath)
     data = generate_table1_data(df, columns)
     df = dispay_table1(data)
     return df
