@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 def generate_table1_data(df: pd.DataFrame=None, columns: List[str]=None) -> List[Dict]:
     """
@@ -80,7 +80,7 @@ def dispay_table1(data: List[Dict]):
                     df = _concat_data(df, feature, overall, distribution)
     return df
 
-def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: float):
+def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: Optional[float]):
     df_data = {}
     df_data['Feature'] = [feature]
     df_data['Overall'] = [overall]
@@ -88,8 +88,10 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: f
     df2 = pd.DataFrame(df_data)
     return pd.concat([df, df2])
 
+def run_table1(df: pd.DataFrame=None, columns: List[str]=None):
+    data = generate_table1_data(df, columns)
+    df = dispay_table1(data)
+    return df
 
 if __name__ == '__main__':
-    data = generate_table1_data()
-    df = dispay_table1(data)
-    print(df)
+    run_table1()
