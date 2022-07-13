@@ -2,6 +2,22 @@ import pandas as pd
 import numpy as np
 from typing import List, Dict, Optional
 
+
+def run_table1(fpath: str=None, columns: List[str]=None):
+    """
+
+    :param fpath: Path to CSV containing data
+    :param columns: Relevant columns specified, or defaulted to all columns.
+    :return: a Pandas Dataframe with summary statistics
+    """
+    df = None
+    if fpath is not None and len(fpath) > 0:
+        df = pd.read_csv(fpath)
+    data = generate_table1_data(df, columns)
+    df = dispay_table1(data)
+    return df
+
+
 def generate_table1_data(df: pd.DataFrame=None, columns: List[str]=None) -> List[Dict]:
     """
     This function generates the data for table 1 by categorizing relevant columns as numerical, binary, datetime, and
@@ -15,6 +31,8 @@ def generate_table1_data(df: pd.DataFrame=None, columns: List[str]=None) -> List
 
     if columns is None:
         columns = df.columns
+
+    df = df[columns]
 
     df = df.set_index(df.columns[0])
 
@@ -55,7 +73,6 @@ def dispay_table1(data: List[Dict]):
     :param data:
     :return:
     """
-    print(data)
     df = pd.DataFrame(columns=['Feature', 'Overall', 'Distribution'])
     for data_dict in data:
         for data_type, features_dict in data_dict.items():
@@ -87,14 +104,6 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: O
     df_data['Distribution'] = [distribution]
     df2 = pd.DataFrame(df_data)
     return pd.concat([df, df2])
-
-def run_table1(fpath: str=None, columns: List[str]=None):
-    df = None
-    if fpath is not None and len(fpath) > 0:
-        df = pd.read_csv(fpath)
-    data = generate_table1_data(df, columns)
-    df = dispay_table1(data)
-    return df
 
 if __name__ == '__main__':
     run_table1()
