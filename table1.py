@@ -90,7 +90,7 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: O
 
 def run_table1(fpath: str=None, columns: List[str]=None):
     df = None
-    if not fpath:
+    if fpath is not None and len(fpath) > 0:
         df = pd.read_csv(fpath)
     data = generate_table1_data(df, columns)
     df = dispay_table1(data)
