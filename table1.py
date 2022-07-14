@@ -1,18 +1,22 @@
 import pandas as pd
 import numpy as np
 from typing import List, Dict, Optional
+import pydaisi as pyd
 
 
-def run_table1(fpath: str=None, columns: List[str]=None):
+def run_table1(fpath: str=None, columns: List[str]=None, generate_data: bool = False, num_rows: int = 10):
     """
-
+    Runs the table1 generator and creates a dataframe for visualization
     :param fpath: Path to CSV containing data
     :param columns: Relevant columns specified, or defaulted to all columns.
     :return: a Pandas Dataframe with summary statistics
     """
+    fake_data_generator = pyd.Daisi('rpkale/faker_health_data')
     df = None
-    if fpath is not None and len(fpath) > 0:
+    if fpath is not None and len(fpath) > 0 and generate_data is False:
         df = pd.read_csv(fpath)
+    elif generate_data is True:
+        df = fake_data_generator.gen_data(num_rows, columns)
     if columns is not None and isinstance(columns, str) and len(columns) > 0:
         columns = eval(columns)
     data = generate_table1_data(df, columns)
@@ -112,5 +116,5 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: O
     return pd.concat([df, df2])
 
 if __name__ == '__main__':
-    df = run_table1()
+    df = run_table1(None, ['Age', 'BMI'])
     print(df)
