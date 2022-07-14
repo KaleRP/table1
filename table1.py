@@ -17,7 +17,7 @@ def run_table1(fpath: str=None, columns: List[str]=None, generate_data=False, nu
         if fpath is not None and len(fpath) > 0:
             df = pd.read_csv(fpath)
     else:
-        df = fake_data_generator.gen_data(num_rows, columns)
+        df = fake_data_generator.gen_data(num_rows=num_rows, inc_columns=columns)
     if columns is not None and isinstance(columns, str) and len(columns) > 0:
         columns = eval(columns)
     data = generate_table1_data(df, columns)
