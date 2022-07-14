@@ -13,9 +13,10 @@ def run_table1(fpath: str=None, columns: List[str]=None, generate_data: bool = F
     """
     fake_data_generator = pyd.Daisi('rpkale/faker_health_data')
     df = None
-    if fpath is not None and len(fpath) > 0 and generate_data is False:
-        df = pd.read_csv(fpath)
-    elif generate_data is True:
+    if generate_data is False:
+        if fpath is not None and len(fpath) > 0:
+            df = pd.read_csv(fpath)
+    else:
         df = fake_data_generator.gen_data(num_rows, columns)
     if columns is not None and isinstance(columns, str) and len(columns) > 0:
         columns = eval(columns)
