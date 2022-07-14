@@ -4,7 +4,7 @@ from typing import List, Dict, Optional
 import pydaisi as pyd
 
 
-def run_table1(fpath: str=None, columns: List[str]=None, generate_data: bool = False, num_rows: int = 10):
+def run_table1(fpath: str=None, columns: List[str]=None, generate_data=False, num_rows: int = 10):
     """
     Runs the table1 generator and creates a dataframe for visualization
     :param fpath: Path to CSV containing data
