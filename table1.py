@@ -11,13 +11,13 @@ def run_table1(fpath: str=None, columns: List[str]=None, generate_data=False, nu
     :param columns: Relevant columns specified, or defaulted to all columns.
     :return: a Pandas Dataframe with summary statistics
     """
-    fake_data_generator = pyd.Daisi('rpkale/faker_health_data')
+    faker_health_data = pyd.Daisi('rpkale/faker_health_data')
     df = None
     if generate_data is False:
         if fpath is not None and len(fpath) > 0:
             df = pd.read_csv(fpath)
     else:
-        df = fake_data_generator.gen_data(num_rows=num_rows, inc_columns=columns)
+        df = faker_health_data.gen_data(num_rows=num_rows, inc_columns=columns).value
     if columns is not None and isinstance(columns, str) and len(columns) > 0:
         columns = eval(columns)
     data = generate_table1_data(df, columns)
