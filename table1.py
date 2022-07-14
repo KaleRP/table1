@@ -34,13 +34,17 @@ def generate_table1_data(df: pd.DataFrame=None, columns: List[str]=None) -> List
     if columns is None or len(columns) == 0:
         columns = df.columns
 
-    df = df[columns]
+    if len(columns) == 1:
+        df = pd.DataFrame(df[columns]).reset_index()
+    else:
+        df = df[columns]
 
     df = df.set_index(df.columns[0])
 
     # Determine datetime columns and convert
     mask = df.astype(str).apply(lambda x: x.str.match(r'\d{4}-\d{2}-\d{2}').all())
-    df.loc[:, mask] = df.loc[:, mask].apply(pd.to_datetime)
+    if not mask.empty:
+        df.loc[:, mask] = df.loc[:, mask].apply(pd.to_datetime)
 
     numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
     binary_cols = [col for col in df.columns if len(df[col].unique()) == 2]
