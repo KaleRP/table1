@@ -13,7 +13,7 @@ def run_table1(fpath: str=None, columns: List[str]=None):
     df = None
     if fpath is not None and len(fpath) > 0:
         df = pd.read_csv(fpath)
-    if columns is not None and isinstance(columns, str) and len(columns) == 0:
+    if columns is not None and isinstance(columns, str) and len(columns) > 0:
         columns = eval(columns)
     data = generate_table1_data(df, columns)
     df = dispay_table1(data)
@@ -108,4 +108,5 @@ def _concat_data(df: pd.DataFrame, feature: str, overall: float, distribution: O
     return pd.concat([df, df2])
 
 if __name__ == '__main__':
-    run_table1()
+    df = run_table1()
+    print(df)
